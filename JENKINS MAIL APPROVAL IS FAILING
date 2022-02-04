@@ -20,6 +20,8 @@ javax.mail.AuthenticationFailedException: 421 4.7.66 TLS 1.0 and 1.1 are not sup
 
 Jenkins config:
 
+manage jenkins --> configure system
+
 Under
 E-mail Notification
 
