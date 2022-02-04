@@ -1,0 +1,45 @@
+Resolution of "Information Security Question about orgnistation Security Score" Issue
+
+1. Update apache version from 2.4.6 to 2.4.46 on both lle-web and hle-web VM instances.
+
+#cd /etc/yum.repos.d && wget https://repo.codeit.guru/codeit.el`rpm -q --qf "%{VERSION}" $(rpm -q --whatprovides redhat-release)`.repo
+
+#sudo yum install httpd-2.4.46
+
+2. Updated below details on the last step of httpd.conf of  keycloak-web(LLE) and itrack-web(Prod) vm instances
+
+vi /etc/httpd/conf/httpd.conf 
+
+SSLProtocol             all -SSLv3 -TLSv1 -TLSv1.1SSLCipherSuite          
+ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384SSLHonorCipherOrder     off
+
+ 
+3. Regarding to add HSTS for id.organisation.com , qa.id.organisation.com 
+
+Update below config under virtual host:443 of httpd servers “lle-web(LLE) and hle-web(Prod)”
+
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+Ex: lle-web
+
+<VirtualHost *:443>
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+ServerName qa.id.organisation.com
+
+On itrack-web
+
+<VirtualHost *:443>
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+ServerName id.organisation.com
+
+4. Once all changes are done check the syntax of httpd then stop and start the server and check SSL server test using below URL SSL Server Test (Powered by Qualys SSL Labs) 
+
+httpd -t
+
+service httpd stop
+service httpd status
+service httpd start
+
+
+URL for SSL Server test
+https://www.ssllabs.com/ssltest/
