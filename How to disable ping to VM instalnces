@@ -1,0 +1,15 @@
+To disable the PING response, add the following line to your init script for the network:
+
+echo 1 >/proc/sys/net/ipv4/icmp_echo_ignore_all
+To reenable the PING response do this:
+
+echo 0 >/proc/sys/net/ipv4/icmp_echo_ignore_all
+
+======================= OR ==================================
+You can also use this command to disable ping request
+
+sysctl net.ipv4.icmp_echo_ignore_all=1
+To enable it again
+
+sysctl net.ipv4.icmp_echo_ignore_all=0
+Finally save it sysctl -p
