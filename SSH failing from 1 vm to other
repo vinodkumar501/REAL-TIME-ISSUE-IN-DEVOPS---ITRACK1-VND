@@ -1,7 +1,7 @@
 ssh : Permission denied (publickey,gssapi-with-mic)
 
 https://stackoverflow.com/questions/36300446/ssh-permission-denied-publickey-gssapi-with-mic
-
+https://phoenixnap.com/kb/setup-passwordless-ssh
 trying to login from jenkins vm to other to perform some maintenance donw time 
 
 
