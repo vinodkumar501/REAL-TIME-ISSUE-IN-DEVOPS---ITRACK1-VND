@@ -1,0 +1,63 @@
+ssh : Permission denied (publickey,gssapi-with-mic)
+
+https://stackoverflow.com/questions/36300446/ssh-permission-denied-publickey-gssapi-with-mic
+
+trying to login from jenkins vm to other to perform some maintenance donw time 
+
+
+====================================== From destination vm where the mainetnance page is present ==================================
+login with jenkins user
+
+sudo su -
+
+su jenkins
+ls -a
+cd .ssh
+
+chanage permission to 
+
+chmod 700 /root/.ssh
+chmod 0600 /root/.ssh/authorized_keys
+
+After that go to /etc/ssh/sshd_config
+
+For best security set
+
+PermitRootLogin no
+
+PubkeyAuthentication yes
+
+Comment those lines for GSSAPI
+
+# #GSSAPIAuthentication yes
+# #GSSAPICleanupCredentials no
+
+systemctl restart sshd
+systemctl staus sshd
+
+
+====================== On jenkins vm ========================
+
+sudo su -
+su jenkins
+
+cd ~
+cd .ssh
+
+ls
+google_compute_engine  google_compute_engine.pub  google_compute_known_hosts  id_rsa  id_rsa.pub  jenkins_key  jenkins_key.pub  known_hosts
+
+copy  id_rsa.pub and paster it other vm itrack-web vm 
+
+cd ~ 
+cd .ssh 
+vi authorized_keys
+
+try 
+
+ssh jenkins@rack-web
+Last login: Fri Apr 22 10:56:12 2021
+
+
+
+
